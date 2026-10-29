@@ -1,0 +1,5 @@
+aiohttp>=3.9,<4
+openpyxl>=3.1,<4
+# The Docker image installs Chromium for exactly this version - keep them in lock-step.
+playwright==1.63.0
+python-dotenv>=1.0
