@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stock Intelligence · Sign in</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="login-body">
+  <main class="login-layout">
+    <section class="panel login-panel">
+      <div class="brand-block large">
+        <div class="brand-logo">SI</div>
+        <div>
+          <div class="brand-title">Stock Intelligence</div>
+          <div class="brand-sub" id="loginBrand">Your secure workspace</div>
+        </div>
+      </div>
+      <h1 class="login-title">Sign In to Stock Intelligence</h1>
+      <p class="login-copy">Real-time stock monitoring powered by Google Sheets.</p>
+      <!--ERROR-->
+      <form method="post" class="login-form">
+        <label>Username / Email<input name="username" autocomplete="username" required placeholder="Enter your username or email"></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label>
+        <label>Authenticator code (only if MFA enabled)<input name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></label>
+        <div class="login-row">
+          <label class="checkline"><input type="checkbox" checked> Remember me</label>
+          <span class="muted">Ask your administrator to reset access</span>
+        </div>
+        <button type="submit" class="primary-btn w-full">↗ Sign In</button>
+      </form>
+      <p class="muted center mt-20">Secure username/password sign-in. Google Sheets OAuth is configured after login in Settings.</p>
+      <p class="muted center mt-20">Need access? Contact your administrator.</p>
+    </section>
+
+    <section class="panel login-info">
+      <div class="pill-tag">▥ The Connected Stock Monitoring Platform</div>
+      <div class="login-hero-grid">
+        <div>
+          <h2>Monitor, Sync, and Control<br>Your Inventory in Real Time</h2>
+          <p>A real-time stock monitoring platform powered by Google Sheets that keeps your team aligned, your stock accurate, and your operations in sync.</p>
+        </div>
+        <div class="illustration-card">
+          <div class="mini-screen">
+            <div class="mini-sidebar"></div>
+            <div class="mini-main">
+              <div class="mini-metrics"></div>
+              <div class="mini-chart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-grid two-col">
+        <article class="feature-card"><div class="feature-icon green">▦</div><div><h3>Google Sheet Sync</h3><p>Keep your stock data in sync with Google Sheets automatically.</p></div></article>
+        <article class="feature-card"><div class="feature-icon violet">▥</div><div><h3>Stock Monitoring</h3><p>Track styles, stock levels, OOS, and alerts in real time.</p></div></article>
+        <article class="feature-card"><div class="feature-icon blue">◫</div><div><h3>Stock History</h3><p>View past stock changes and sync records for full traceability.</p></div></article>
+        <article class="feature-card"><div class="feature-icon indigo">☰</div><div><h3>Reports</h3><p>Analyze stock performance and trends with clear, actionable reports.</p></div></article>
+        <article class="feature-card full"><div class="feature-icon purple">♧</div><div><h3>Secure Employee Access</h3><p>Role-based access control to keep your data safe and your team productive.</p></div></article>
+      </div>
+
+      <div class="security-strip">
+        <div><strong>MFA-Ready</strong><span>Add an extra layer of protection with multi-factor authentication.</span></div>
+        <div><strong>Encrypted Sessions</strong><span>Your data is protected with industry-standard encryption.</span></div>
+        <div><strong>Audit Logs</strong><span>Track sign-ins, syncs, and key actions for complete accountability.</span></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    fetch('/api/workspace').then(r=>r.json()).then(x=>{document.getElementById('loginBrand').textContent=x.brand_name||'Your secure workspace'}).catch(()=>{})
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  "name": "Myntra Stock Alert -> WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "myntra-stock",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1111111-0000-4000-8000-000000000001",
+      "name": "Stock Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "myntra-stock"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// 1) simple shared-secret check (must match N8N_API_KEY in the Python .env)\nconst SECRET = 'CHANGE_ME';\nconst req = $input.first().json;\nif ((req.headers || {})['x-api-key'] !== SECRET) {\n  throw new Error('Unauthorized webhook call');\n}\n\nconst b = req.body || {};\nconst alerts = b.alerts || [];\nconst s = b.summary || {};\nconst LIMIT = 3500; // WhatsApp text limit is 4096 chars\n\nconst head =\n  `🚨 *Myntra Stock Alert*  (${b.part}/${b.parts})\\n` +\n  `Checked: ${s.total_checked ?? '-'} | Partial OOS: ${s.partial_oos ?? 0} | All OOS: ${s.all_oos ?? 0} | 404: ${s.not_found ?? 0}\\n` +\n  `⏱ ${s.seconds ?? '-'}s\\n`;\n\nconst lines = alerts.map(a => {\n  const tag = a.status === 'ALL_OOS' ? '🔴 ALL OUT' : '🟠 Size OOS';\n  const who = [a.brand, a.name].filter(Boolean).join(' ').slice(0, 40);\n  return `${tag} *${a.style_id}* ${who}\\n   ❌ ${a.oos_sizes.join(', ')}\\n   ${a.url}`;\n});\n\nif (!lines.length) {\n  return [{ json: { text: head + '\\n✅ Sab styles in stock hain.' } }];\n}\n\nconst out = [];\nlet cur = head + '\\n';\nfor (const l of lines) {\n  if ((cur + l + '\\n\\n').length > LIMIT) { out.push({ json: { text: cur.trim() } }); cur = head + '\\n'; }\n  cur += l + '\\n\\n';\n}\nif (b.more_not_shown > 0 && b.part === b.parts) {\n  cur += `…aur ${b.more_not_shown} styles. Poori list Excel report me hai: ${s.report || ''}`;\n}\nout.push({ json: { text: cur.trim() } });\nreturn out;"
+      },
+      "id": "a1111111-0000-4000-8000-000000000002",
+      "name": "Format WhatsApp Messages",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "YOUR_PHONE_NUMBER_ID",
+        "recipientPhoneNumber": "91XXXXXXXXXX",
+        "textBody": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "id": "a1111111-0000-4000-8000-000000000003",
+      "name": "Send WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [720, 300],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "REPLACE_ME",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Stock Webhook": {
+      "main": [[{ "node": "Format WhatsApp Messages", "type": "main", "index": 0 }]]
+    },
+    "Format WhatsApp Messages": {
+      "main": [[{ "node": "Send WhatsApp", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false
+}

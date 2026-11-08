@@ -1,0 +1,10 @@
+Stock Intelligence — Railway dashboard
+=====================================
+1) Read RAILWAY_SETUP_HINDI.md.
+2) GitHub repo ROOT must contain Dockerfile, railway.toml, main.py, requirements.txt and stockwatch/.
+3) Railway Root Directory = / ; use Dockerfile ; leave Custom Start Command blank.
+4) Set PLATFORM_ADMIN_USER, PLATFORM_ADMIN_PASSWORD (12+ characters), PLATFORM_SECURE_COOKIE=1, STOCKWATCH_DATA_DIR=/data.
+5) Attach volume /data; generate public domain.
+6) Test /health then /login.
+
+' stockwatch/' is an internal Python source-code folder; not an old UI application. DO NOT DELETE.

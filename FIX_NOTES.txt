@@ -1,0 +1,18 @@
+Myntra Stock Monitor - hotfix notes
+
+1. Fixed browser size-label recognition for standalone S, M, and L.
+   The previous JavaScript matcher accepted XS/XL/XXL/3XL but omitted plain S/M/L,
+   which caused the exact "Watched size(s) not visible: L, M, S" error seen in the
+   supplied report.
+2. Fixed PDP field mapping: pdp-title is read as brand and pdp-name as product name,
+   matching the field order shown by the supplied report.
+3. Missing watched sizes remain ERROR; the monitor does not guess that an unseen size
+   is out of stock.
+
+Validation:
+- Python source compilation passed.
+- tests/test_size_normalization.py passed.
+- tests/test_parser.py passed.
+- The live Playwright DOM test could not be run in this build environment because
+  the Playwright Chromium executable is not installed. It should be run on the laptop
+  where Playwright/Chrome is installed.

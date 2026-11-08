@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stock Intelligence</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <aside id="sidebar" class="sidebar">
+    <div class="brand-block">
+      <div class="brand-logo" id="brandIcon">SI</div>
+      <div>
+        <div class="brand-title">Stock Intelligence</div>
+        <div class="brand-sub" id="brandName">Your organization</div>
+      </div>
+    </div>
+    <nav id="navigation" class="nav"></nav>
+    <div class="sidebar-footer">
+      <div>© Stock Intelligence</div>
+      <small id="versionLabel">Workspace dashboard v4</small>
+    </div>
+  </aside>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-only" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div>
+          <div class="eyebrow" id="breadcrumb">OVERVIEW</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input id="globalSearch" class="top-search" placeholder="Search campaigns, styles, or reports...">
+          <span class="kbd">Ctrl K</span>
+        </div>
+        <div class="select-wrap small-select">
+          <span class="icon-inline">◫</span>
+          <select id="globalCampaign"><option value="">All Campaigns</option></select>
+        </div>
+        <button class="icon-btn" id="themeToggle" title="Switch theme">☾</button>
+        <button class="icon-btn notif-btn" title="Notifications"><span>🔔</span><i></i></button>
+        <button class="profile-btn" id="accountBtn" title="Account"><span class="profile-avatar">A</span><span id="accountText">Admin</span></button>
+        <button class="ghost-btn" id="logoutBtn">Sign out</button>
+      </div>
+    </header>
+
+    <section id="content"></section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <dialog id="actionDialog" class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="modalTitle"></h2>
+        <p class="muted" id="modalDescription"></p>
+      </div>
+    </div>
+    <form id="modalForm">
+      <div id="modalFields" class="form-grid two"></div>
+      <div class="modal-actions">
+        <button type="button" class="secondary-btn" id="modalCancel">Cancel</button>
+        <button type="submit" class="primary-btn" id="modalSubmit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="onboard" class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">BRAND SETUP</div>
+        <h2>Welcome to Stock Intelligence</h2>
+        <p class="muted">Set your organization name, logo initials and brand color before you start. Nothing is hard-coded.</p>
+      </div>
+    </div>
+    <form id="brandForm">
+      <div class="form-grid two">
+        <label>Organization / brand name<input name="brand_name" required minlength="2" maxlength="75" placeholder="e.g. Twins Lady"></label>
+        <label>Logo initials<input name="logo_initials" required maxlength="3" value="SI" placeholder="TL"></label>
+        <label>Brand color<input name="accent" type="color" value="#4f46e5"></label>
+        <label>Default appearance<select name="theme_default"><option value="light">Day mode</option><option value="dark">Night mode</option></select></label>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="primary-btn">Save brand & start</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script defer src="/assets/app.js"></script>
+</body>
+</html>
